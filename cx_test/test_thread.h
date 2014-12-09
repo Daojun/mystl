@@ -8,22 +8,27 @@
 using namespace std;
 
 int data = 0;
+mutex mutexPrint;
 
 //std::this_thread::sleep_for(chrono:seconds(1));
 
 void PrintA()
-{  
-  for (int i=0; i<1000000; i++)
+{ 
+  for (int i=0; i<1000; i++)
   {
+	unique_lock<mutex> lock(mutexPrint);
     data = data-1;
+	cout << "A" << data;
   }
 }
 
 void PrintB()
 {
-  for (int i=0; i<1000000; i++)
+  for (int i=0; i<1000; i++)
   {
+	unique_lock<mutex> lock(mutexPrint);
     data = data+1;
+	cout << "B" << data;
   }
 }
 
