@@ -7,6 +7,7 @@
 #include <queue>
 #include <condition_variable>
 #include <future>
+
 #include "testcase.h"
 using namespace std;
 
@@ -16,8 +17,7 @@ mutex mutexPrint;
 queue<int> shareQueue;
 condition_variable mcond;
 
-promise<vector<int>> producerVec;
-future<vector<int>> consumerVec = { producerVec.get_future() };
+
 
 //std::this_thread::sleep_for(chrono:seconds(1));
 
@@ -70,18 +70,28 @@ void Consumer()
 	}
 }
 
-void ProducerWithPromise()
+void ProducerWithPromise(promise<vector<int>> & producerVec)
 {
 	vector<int> vec{ 1, 2, 3, 4, 5 };
 	producerVec.set_value(vec);
 }
 
-void ConsumerWithFuture()
+void ConsumerWithFuture(future<vector<int>> & consumerVec)
 {
 	for (auto x : consumerVec.get())
 	{
 		cout << x << endl;
 	}
+}
+
+int get1()
+{
+	return 1;
+}
+
+int put1()
+{
+	return 1;
 }
 
 bool ExcuteTestcase()
@@ -96,11 +106,27 @@ bool ExcuteTestcase()
 	testC.join();
 	testD.join();
 
-	thread testE{ ConsumerWithFuture };
-	thread testF{ ProducerWithPromise };
+	promise<vector<int>> producerVec;
+	future<vector<int>> consumerVec = { producerVec.get_future() };
+
+	//should use move to have right value
+	thread testE{ ConsumerWithFuture, move(consumerVec) };
+	thread testF{ ProducerWithPromise, move(producerVec) };
 	testE.join();
 	testF.join();
 
+	using Task_type = int();
+	packaged_task < Task_type > pt0{ get1 };
+	packaged_task < Task_type > pt1{ put1 };
+	future<int> f0{ pt0.get_future() };
+	future<int> f1{ pt1.get_future() };
+	thread t1{ move(pt0) };
+	thread t2{ move(pt1) };
+	//why the join is still needed?
+	t1.join();
+	t2.join();
+	int result = f0.get() + f1.get();
+	cout << "package_task result 1+1 = " << result << endl;
 	cout << "Final data = " << data << endl;
 	return true;
 }
@@ -120,6 +146,9 @@ public:
 		std::cout << "Thread case finished" << std::endl;
 		return true;
 	}
+
+private:
+	//package_task<> pt{};
 };
 
 #endif
