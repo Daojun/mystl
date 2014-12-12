@@ -96,25 +96,29 @@ int put1()
 
 bool ExcuteTestcase()
 {
+	//1 mutex
 	thread testA{ PrintA };
 	thread testB{ PrintB };
 	testA.join();
 	testB.join();
 
+	//2 condition_variable
 	thread testC{ Consumer };
 	thread testD{ Producer };
 	testC.join();
 	testD.join();
+	cout << "Final data = " << data << endl;
 
+	//3 promise/future
 	promise<vector<int>> producerVec;
 	future<vector<int>> consumerVec = { producerVec.get_future() };
-
 	//should use move to have right value
 	thread testE{ ConsumerWithFuture, move(consumerVec) };
 	thread testF{ ProducerWithPromise, move(producerVec) };
 	testE.join();
 	testF.join();
 
+	//4 package_task
 	using Task_type = int();
 	packaged_task < Task_type > pt0{ get1 };
 	packaged_task < Task_type > pt1{ put1 };
@@ -122,12 +126,12 @@ bool ExcuteTestcase()
 	future<int> f1{ pt1.get_future() };
 	thread t1{ move(pt0) };
 	thread t2{ move(pt1) };
+	int result = f0.get() + f1.get();
+	cout << "package_task result 1+1 = " << result << endl;
 	//why the join is still needed?
 	t1.join();
 	t2.join();
-	int result = f0.get() + f1.get();
-	cout << "package_task result 1+1 = " << result << endl;
-	cout << "Final data = " << data << endl;
+
 	return true;
 }
 
