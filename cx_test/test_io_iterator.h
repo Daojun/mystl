@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <iterator>
+#include <regex>
 #include "testcase.h"
 using namespace std;
 
@@ -53,6 +54,21 @@ void readPhoneBook()
     }
 }
 
+void regexTest()
+{
+	regex pat(R"(\w{2}\s*\d{5}(-\d{4})?)");
+	cout << "REG: "<<R"(\w{ 2 }\s*\d{ 5 }(-\d{ 4 }) ? )" << endl;
+	//cout << pat << endl;
+	int lineno = 0;
+	for (string line; getline(cin, line);)
+	{
+		++lineno;
+		smatch matches;
+		if (regex_search(line, matches, pat))
+			cout << lineno << ": " << matches[0] << endl;
+	}
+}
+
 class CTestIOIterator : public CTestCase
 {
  public:
@@ -66,6 +82,7 @@ class CTestIOIterator : public CTestCase
   {
     writePhoneBook();
     readPhoneBook();
+	regexTest();
     std::cout<<"IO_Test case finished"<<std::endl;
     return true;
   }
