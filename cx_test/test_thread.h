@@ -132,6 +132,11 @@ bool ExcuteTestcase()
 	t1.join();
 	t2.join();
 
+	//5 async
+	future<int> x = async(get1);
+	future<int> y = async(put1);
+	cout <<"Async 1+1 = "<< x.get() + y.get() << endl;
+
 	return true;
 }
 
