@@ -6,11 +6,12 @@
 #include "testcases.h"
 
 using namespace std;
+extern void OpenTest();
 
 void Help()
 {
 	cout << "You can use main like this:" << endl;
-	cout << "main 0 //to test case 0" << endl;
+	cout << "main 0 //to test case 0" << endl;	
 }
 
 int main(int argc, char**argv)
@@ -20,6 +21,9 @@ int main(int argc, char**argv)
 	{
 		Help();
 		cout << cases.listAllTestCases();
+
+		// default run open test.
+		OpenTest();
 	}
 	else
 	{
