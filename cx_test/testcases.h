@@ -3,6 +3,7 @@
 
 #include "test_io_iterator.h"
 #include "test_thread.h"
+#include "test_socketserver.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -17,6 +18,7 @@ public:
 		//Add test cases here
 		m_testCases.push_back(new CTestIOIterator());
 		m_testCases.push_back(new CTestThread());
+		m_testCases.push_back(new CTestSocketServer());
 	}
 	~CTestCaseSuit()
 	{
