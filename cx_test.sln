@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cx_test", "cx_test\cx_test.vcxproj", "{42BB9033-4FE3-4E7B-A07C-E9BB69B55431}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sclient", "..\sclient\sclient\sclient.vcxproj", "{47982ED6-CEEF-4F37-B30D-D7992E128C72}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{42BB9033-4FE3-4E7B-A07C-E9BB69B55431}.Debug|Win32.ActiveCfg = Debug|Win32
+		{42BB9033-4FE3-4E7B-A07C-E9BB69B55431}.Debug|Win32.Build.0 = Debug|Win32
+		{42BB9033-4FE3-4E7B-A07C-E9BB69B55431}.Release|Win32.ActiveCfg = Release|Win32
+		{42BB9033-4FE3-4E7B-A07C-E9BB69B55431}.Release|Win32.Build.0 = Release|Win32
+		{47982ED6-CEEF-4F37-B30D-D7992E128C72}.Debug|Win32.ActiveCfg = Debug|Win32
+		{47982ED6-CEEF-4F37-B30D-D7992E128C72}.Debug|Win32.Build.0 = Debug|Win32
+		{47982ED6-CEEF-4F37-B30D-D7992E128C72}.Release|Win32.ActiveCfg = Release|Win32
+		{47982ED6-CEEF-4F37-B30D-D7992E128C72}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
